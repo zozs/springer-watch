@@ -1,0 +1,10 @@
+{
+  "email": "recipient@example.com",
+  "sender": "sender@example.com",
+  "smtp": {
+    "host": "smtp.example.com",
+    "port": 0
+  },
+  "proceedings": ["Africacrypt"],
+  "guid": []
+}
