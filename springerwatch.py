@@ -46,14 +46,17 @@ def check_new_guids(conference, guids):
     """Returns a list of feeditem for new guids."""
     feed = get_feed(conference)
     new = [item for item in feed['items'] if item.id not in guids]
+    # Append origin to all items.
+    for item in new:
+        item.origin = conference
     return new
 
 
 def updates_email(new, config):
     """Construct e-mail with new items and send to email address."""
-    item_fmt = '{}\n{}\n'
+    item_fmt = '{}\n{}\n(Origin phrase: {})\n'
     subject = '[springer-watch] {:d} new proceedings'.format(len(new))
-    new_msgs = '\n'.join(item_fmt.format(item.title, item.link) for item in new)
+    new_msgs = '\n'.join(item_fmt.format(item.title, item.link, item.origin) for item in new)
     message_text = EMAIL_MESSAGE.format(new_msgs)
 
     # Construct actual e-mail and send it.
