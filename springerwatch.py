@@ -7,7 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-CONFIG_FILE = 'config.json'
+CONFIG_FILE = '/app/data/config.json'
 EMAIL_MESSAGE = """\
 Hi,
 
@@ -66,9 +66,11 @@ def updates_email(new, config):
     message['To'] = config['email']
 
     # Now send it.
-    smtp = smtplib.SMTP(config['smtp']['host'], port=config['smtp']['port'])
-    smtp.send_message(message)
-    smtp.quit()
+    with smtplib.SMTP(config['smtp']['host'], port=config['smtp']['port']) as smtp:
+        if config['smtp']['starttls']:
+            smtp.starttls()
+            smtp.login(config['smtp']['user'], config['smtp']['pass'])
+        smtp.send_message(message)
 
 
 def check_conferences(config):

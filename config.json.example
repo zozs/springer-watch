@@ -3,7 +3,10 @@
   "sender": "sender@example.com",
   "smtp": {
     "host": "smtp.example.com",
-    "port": 0
+    "port": 0,
+    "starttls": true,
+    "user": "",
+    "pass": ""
   },
   "proceedings": ["Africacrypt"],
   "guid": []
